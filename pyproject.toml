@@ -1,0 +1,20 @@
+[project]
+
+name = "dask-tpcdi"
+version = "0.1"
+requires-python = ">=3.10"
+
+[build-system]
+
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.dagster]
+
+module_name = "dask_tpcdi.definitions"
+code_location_name = "dask_tpcdi"
+
+[tool.ruff]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy" 

@@ -1,0 +1,10 @@
+name: dask-tpcdi
+channels:
+  - conda-forge
+dependencies:
+  - dask
+  - distributed
+  - dagster
+  - pandas
+  - dagit
+  - pre-commit

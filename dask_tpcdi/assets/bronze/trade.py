@@ -1,12 +1,12 @@
 from dagster import asset
 import dask.dataframe as dd
 
-from dask_tpcdi.assets.landing.constants import TRADE_FILE_PATH as INPUT_PATH
-from dask_tpcdi.assets.raw.constants import TRADE_PATH as OUTPUT_PATH
+from dask_tpcdi.assets.staging.constants import TRADE_FILE_PATH as INPUT_PATH
+from dask_tpcdi.assets.bronze.constants import TRADE_PATH as OUTPUT_PATH
 
 
 @asset
-def trade_history() -> None:
+def trade() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,
         sep="|",
@@ -28,7 +28,6 @@ def trade_history() -> None:
         ),
         dtype={
             "T_ID": "int",
-            "T_DTS": "datetime",
             "T_ST_ID": "string",
             "T_TT_ID": "string",
             "T_IS_CASH": "bool",
@@ -42,4 +41,6 @@ def trade_history() -> None:
             "T_COMM": "float",
             "T_TAX": "float",
         },
+        date_format="%Y-%m-%d %H:%M:%S",
+        parse_dates=["T_DTS"],
     ).to_parquet(OUTPUT_PATH)

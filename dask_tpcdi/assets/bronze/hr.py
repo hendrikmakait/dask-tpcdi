@@ -1,8 +1,8 @@
 from dagster import asset
 import dask.dataframe as dd
 
-from dask_tpcdi.assets.landing.constants import HR_FILE_PATH as INPUT_PATH
-from dask_tpcdi.assets.raw.constants import HR_PATH as OUTPUT_PATH
+from dask_tpcdi.assets.staging.constants import HR_FILE_PATH as INPUT_PATH
+from dask_tpcdi.assets.bronze.constants import HR_PATH as OUTPUT_PATH
 
 
 @asset
@@ -21,14 +21,13 @@ def hr() -> None:
             "EmployeeOffice",
             "EmployeePhone",
         ),
-        index_col=0,
         dtype={
             "EmployeeID": "int",
             "ManagerID": "int",
             "EmployeeFirstName": "string",
             "EmployeeLastName": "string",
             "EmployeeMI": "string",
-            "EmployeeJobCode": "int",
+            "EmployeeJobCode": "Int16",
             "EmployeeBranch": "string",
             "EmployeeOffice": "string",
             "EmployeePhone": "string",

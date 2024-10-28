@@ -5,7 +5,7 @@ from dask_tpcdi.assets.staging.constants import STATUS_TYPE_FILE_PATH as INPUT_P
 from dask_tpcdi.assets.bronze.constants import STATUS_TYPE_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def status_type() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,

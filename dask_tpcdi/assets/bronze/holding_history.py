@@ -4,7 +4,7 @@ from dask_tpcdi.assets.staging.constants import HOLDING_HISTORY_FILE_PATH as INP
 from dask_tpcdi.assets.bronze.constants import HOLDING_HISTORY_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def holding_history() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,

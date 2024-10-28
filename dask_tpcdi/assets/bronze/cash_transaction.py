@@ -5,7 +5,7 @@ from dask_tpcdi.assets.staging.constants import CASH_TRANSACTION_FILE_PATH as IN
 from dask_tpcdi.assets.bronze.constants import CASH_TRANSACTION_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def cash_transaction() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,

@@ -194,7 +194,7 @@ def extract_accounts(action: lxml.etree.Element, customer: Customer) -> list[Acc
     return [extract_account(account, customer) for account in accounts]
 
 
-@multi_asset(specs=[AssetSpec("customer"), AssetSpec("account")])
+@multi_asset(specs=[AssetSpec(["bronze", "customer"]), AssetSpec(["bronze", "account"])])
 def customer_mgmt():
     with open(CUSTOMER_MGMT_FILE_PATH) as f:
         tree = lxml.etree.parse(f)

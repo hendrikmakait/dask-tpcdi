@@ -4,7 +4,7 @@ from dask_tpcdi.assets.staging.constants import DAILY_MARKET_FILE_PATH as INPUT_
 from dask_tpcdi.assets.bronze.constants import DAILY_MARKET_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def daily_market() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,

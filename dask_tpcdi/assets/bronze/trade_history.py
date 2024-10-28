@@ -5,7 +5,7 @@ from dask_tpcdi.assets.staging.constants import TRADE_HISTORY_FILE_PATH as INPUT
 from dask_tpcdi.assets.bronze.constants import TRADE_HISTORY_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def trade_history() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,

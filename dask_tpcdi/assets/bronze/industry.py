@@ -5,7 +5,7 @@ from dask_tpcdi.assets.staging.constants import INDUSTRY_FILE_PATH as INPUT_PATH
 from dask_tpcdi.assets.bronze.constants import INDUSTRY_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def industry() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,

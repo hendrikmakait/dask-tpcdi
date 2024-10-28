@@ -5,7 +5,7 @@ from dask_tpcdi.assets.staging.constants import TAX_RATE_FILE_PATH as INPUT_PATH
 from dask_tpcdi.assets.bronze.constants import TAX_RATE_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def tax_rate() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,

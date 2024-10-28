@@ -14,7 +14,7 @@ class RecordType(StrEnum):
     Security = "SEC"
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def company() -> None:
     with dask.config.set({"dataframe.convert-string": True}):  # pyright: ignore[reportPrivateImportUsage]
         records = load_records(RecordType.Company)
@@ -43,12 +43,10 @@ def company() -> None:
         )
         company["PTS"] = dd.to_datetime(company["PTS"], format="%Y%m%d-%H%M%S")  # pyright: ignore[reportPrivateImportUsage]
         company["FoundingDate"] = dd.to_datetime(company["FoundingDate"], "%Y%m%d")  # pyright: ignore[reportPrivateImportUsage]
-        company["year"] = company["PTS"].dt.year
-        company["quarter"] = company["PTS"].dt.quarter
-        company.to_parquet(COMPANY_PATH, partition_on=["year", "quarter"])
+        company.to_parquet(COMPANY_PATH)
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def financial() -> None:
     with dask.config.set({"dataframe.convert-string": True}):  # pyright: ignore[reportPrivateImportUsage]
         records = load_records(RecordType.Financial)
@@ -95,12 +93,10 @@ def financial() -> None:
         financial["PTS"] = dd.to_datetime(financial["PTS"], format="%Y%m%d-%H%M%S")  # pyright: ignore[reportPrivateImportUsage]
         financial["QtrStartDate"] = dd.to_datetime(financial["QtrStartDate"], "%Y%m%d")  # pyright: ignore[reportPrivateImportUsage]
         financial["PostingDate"] = dd.to_datetime(financial["PostingDate"], "%Y%m%d")  # pyright: ignore[reportPrivateImportUsage]
-        financial["year"] = financial["PTS"].dt.year
-        financial["quarter"] = financial["PTS"].dt.quarter
-        financial.to_parquet(FINANCIAL_PATH, partition_on=["year", "quarter"])
+        financial.to_parquet(FINANCIAL_PATH)
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def security() -> None:
     with dask.config.set({"dataframe.convert-string": True}):  # pyright: ignore[reportPrivateImportUsage]
         records = load_records(RecordType.Security)
@@ -131,9 +127,7 @@ def security() -> None:
         security["FirstTradeExchg"] = dd.to_datetime(
             security["FirstTradeExchg"], "%Y%m%d"
         )  # pyright: ignore[reportPrivateImportUsage]
-        security["year"] = security["PTS"].dt.year
-        security["quarter"] = security["PTS"].dt.quarter
-        security.to_parquet(SECURITY_PATH, partition_on=["year", "quarter"])
+        security.to_parquet(SECURITY_PATH)
 
 
 def load_records(type: RecordType) -> db.Bag:  # pyright: ignore[reportPrivateImportUsage]

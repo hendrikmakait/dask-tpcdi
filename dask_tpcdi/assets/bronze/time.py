@@ -5,7 +5,7 @@ from dask_tpcdi.assets.staging.constants import TIME_FILE_PATH as INPUT_PATH
 from dask_tpcdi.assets.bronze.constants import TIME_PATH as OUTPUT_PATH
 
 
-@asset
+@asset(key_prefix=["bronze"])
 def time() -> None:
     dd.read_csv(  # pyright: ignore[reportPrivateImportUsage]
         INPUT_PATH,
@@ -23,7 +23,7 @@ def time() -> None:
             "OfficeHoursFlag",
         ),
         dtype={
-            "SK_TimeID": "string", # FIXME: What's the type?
+            "SK_TimeID": "int",
             "TimeValue": "string",
             "HourID": "int",
             "HourDesc": "string",
